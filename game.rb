@@ -10,7 +10,7 @@ hooded = Sprite.new(
     x: 10, y: 245, z: 5,
     width: 80,
     height: 80,
-    clip_width: 54,
+    clip_width: 55,
     time: 200,
     animations: {
         idle: 0..1,
@@ -31,9 +31,12 @@ on :key_held do |event|
         when 'space'
             hooded.y += -1
             hooded.play animation: :jump
-        when 'f'
-            hooded.x += 2
+        when 'right'
+            hooded.x += 1.5
             hooded.play animation: :run
+        when 'left'
+            hooded.x -= 1.5
+            hooded.play animation: :run, flip: :horizontal
     end
 end
 
