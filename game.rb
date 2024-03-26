@@ -6,17 +6,16 @@ height = 480
 Image.new('Adventures of Pip.png.jfif');
 
 hooded = Sprite.new(
-    'Hooded.png',
-    x: 10, y: 245, z: 5,
+    'Hooded_emotes.png',
+    x: 10, y: 250, z: 5,
     width: 80,
     height: 80,
-    clip_width: 55,
+    clip_width: 68,
     time: 200,
     animations: {
-        idle: 0..1,
-        walk: 2..5,
-        run: 6..14, 
-        jump: 15..22,
+        walk: 0..3,
+        run: 4..11, 
+        jump: 12..19,
     }
 )
 
