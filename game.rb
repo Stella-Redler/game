@@ -29,7 +29,7 @@ on :key_held do |event|
             hooded.x += 1
             hooded.play animation: :walk
         when 'space'
-            hooded.y += -9
+            hooded.y += -8
             hooded.play animation: :jump
         when 'right'
             hooded.x += 1.5
@@ -40,7 +40,7 @@ on :key_held do |event|
     end
 end
 
-arrayY = 260
+arrayY = 0
 
 update do
     if hooded.y < arrayY
