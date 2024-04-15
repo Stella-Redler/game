@@ -1,7 +1,7 @@
 require 'ruby2d';
 
 width = 640
-height = 480
+height = 400
 
 Image.new('Adventures of Pip.png.jfif');
 
@@ -20,10 +20,10 @@ hooded = Sprite.new(
     }
 )
 
-arrayY = [260, 255, 250, 245, 235, 235, 235, 280, 280, 280, 280, 280, 280, 280, 235, 235, 235, 235, 235, 235, 235, 170, 170, 170, 175, 180, 185, 235, 235, 235, 235, 235]
+arrayY = [260, 255, 250, 245, 235, 235, 235, 280, 280, 280, 280, 280, 280, 280, 235, 235, 235, 235, 235, 235, 235, 170, 170, 170, 175, 180, 185, 235, 235, 235, 235, 235, 235]
 jumping = false
 jump_height = 60
-jump_speed = 8
+jump_speed = 5
 
 on :key_held do |event|
     case event.key
@@ -37,7 +37,7 @@ on :key_held do |event|
         unless jumping
             jumping = true
             hooded.play animation: :jump
-        end
+    end
     when 'right'
         hooded.x += 1.5
         hooded.play animation: :run
@@ -48,9 +48,8 @@ on :key_held do |event|
 end
 
 update do
-    platform_index = [(hooded.x / 640.0 * 32).to_i, arrayY.length - 1].min  # Convert hooded.x to the range 0-3
+    platform_index = [(hooded.x / 640.0 * 33).to_i, arrayY.length - 1].min  # Convert hooded.x to the range 0-3
     target_y = arrayY[platform_index]
-
     if jumping
         hooded.y -= jump_speed
         if hooded.y <= target_y - jump_height
