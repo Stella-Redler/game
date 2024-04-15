@@ -20,34 +20,48 @@ hooded = Sprite.new(
     }
 )
 
+arrayY = [260, 255, 250, 245, 235, 235, 235, 280, 280, 280, 280, 280, 280, 280, 235, 235, 235, 235, 235, 235, 235, 170, 170, 170, 175, 180, 185, 235, 235, 235, 235, 235]
+jumping = false
+jump_height = 60
+jump_speed = 8
+
 on :key_held do |event|
     case event.key
-        when 'a'
-            hooded.x -= 1
-            hooded.play flip: :horizontal, animation: :walk
-        when 'd'
-            hooded.x += 1
-            hooded.play animation: :walk
-        when 'space'
-            hooded.y += -8
+    when 'a'
+        hooded.x -= 1
+        hooded.play flip: :horizontal, animation: :walk
+    when 'd'
+        hooded.x += 1
+        hooded.play animation: :walk
+    when 'space'
+        unless jumping
+            jumping = true
             hooded.play animation: :jump
-        when 'right'
-            hooded.x += 1.5
-            hooded.play animation: :run
-        when 'left'
-            hooded.x -= 1.5
-            hooded.play animation: :run, flip: :horizontal
+        end
+    when 'right'
+        hooded.x += 1.5
+        hooded.play animation: :run
+    when 'left'
+        hooded.x -= 1.5
+        hooded.play animation: :run, flip: :horizontal
     end
 end
 
-arrayY = 0
-
 update do
-    if hooded.y < arrayY
-        hooded.y += 60/(arrayY[hooded.x] - hooded.y + 0.1)
-    end
-    if hooded.y > arrayY[hooded.x]
-        hooded.y = arrayY[hooded.x]
+    platform_index = [(hooded.x / 640.0 * 32).to_i, arrayY.length - 1].min  # Convert hooded.x to the range 0-3
+    target_y = arrayY[platform_index]
+
+    if jumping
+        hooded.y -= jump_speed
+        if hooded.y <= target_y - jump_height
+            jumping = false
+        end
+    else
+        if hooded.y < target_y
+            hooded.y += 1
+        elsif hooded.y > target_y
+            hooded.y = target_y
+        end
     end
 end
 
