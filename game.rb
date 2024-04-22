@@ -20,6 +20,19 @@ hooded = Sprite.new(
     }
 )
 
+shrooms = Sprite.new(
+    'shrooms.png',
+    x: 275, y: 295, z: 5,
+    width: 55,
+    height: 55,
+    clip_width: 176,
+    time: 200,
+    animations: {
+        idle: 0,
+        attack: 1..4,
+    }
+)
+
 arrayY = [260, 255, 250, 245, 235, 235, 235, 280, 280, 280, 280, 280, 280, 280, 235, 235, 235, 235, 235, 235, 235, 170, 170, 170, 175, 180, 185, 235, 235, 235, 235, 235, 235]
 jumping = false
 jump_height = 60
@@ -62,6 +75,12 @@ update do
             hooded.y = target_y
         end
     end
+    if hooded.x >= 240 && hooded.x <= 270 && hooded.y >= 260
+        shrooms.play animation: :attack
+    else
+        shrooms.play animation: :idle
+    end
 end
+
 
 show
