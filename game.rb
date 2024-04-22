@@ -5,7 +5,6 @@ height = 400
 
 Image.new('Adventures of Pip.png.jfif');
 
-
 hooded = Sprite.new(
     'Hooded_emotes.png',
     x: 10, y: 260, z: 5,
@@ -22,13 +21,12 @@ hooded = Sprite.new(
 
 shrooms = Sprite.new(
     'shrooms.png',
-    x: 275, y: 295, z: 5,
+    x: 275, y: 295, z: 6,
     width: 55,
     height: 55,
-    clip_width: 176,
-    time: 200,
+    clip_width: 177,
+    time: 300,
     animations: {
-        idle: 0,
         attack: 1..4,
     }
 )
@@ -61,7 +59,7 @@ on :key_held do |event|
 end
 
 update do
-    platform_index = [(hooded.x / 640.0 * 33).to_i, arrayY.length - 1].min  # Convert hooded.x to the range 0-3
+    platform_index = [(hooded.x / 640.0 * 33).to_i, arrayY.length - 1].min
     target_y = arrayY[platform_index]
     if jumping
         hooded.y -= jump_speed
@@ -77,8 +75,9 @@ update do
     end
     if hooded.x >= 240 && hooded.x <= 270 && hooded.y >= 260
         shrooms.play animation: :attack
+        loop = true
     else
-        shrooms.play animation: :idle
+        shrooms.stop
     end
 end
 
