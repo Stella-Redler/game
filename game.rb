@@ -31,6 +31,27 @@ shrooms = Sprite.new(
     }
 )
 
+heart1 = Sprite.new(
+    'heart.png',
+    x: 30, y: 430, z: 6,
+    width: 30,
+    height: 30,
+)
+
+heart2 = Sprite.new(
+    'heart.png',
+    x: 60, y: 430, z: 6,
+    width: 30,
+    height: 30,
+)
+
+heart3 = Sprite.new(
+    'heart.png',
+    x: 90, y: 430, z: 6,
+    width: 30,
+    height: 30,
+)
+
 arrayY = [260, 255, 250, 245, 235, 235, 235, 280, 280, 280, 280, 280, 280, 280, 235, 235, 235, 235, 235, 235, 235, 170, 170, 170, 175, 180, 185, 235, 235, 235, 235, 235, 235]
 jumping = false
 jump_height = 60
@@ -73,13 +94,18 @@ update do
             hooded.y = target_y
         end
     end
+    
+    heart[3,2,1]
+    i = 0
     if hooded.x >= 240 && hooded.x <= 270 && hooded.y >= 260
         shrooms.play animation: :attack
+        hooded.color.opacity = 0.5
+        heart[i].color.opacity = 0
         loop = true
     else
         shrooms.stop
+        hooded.color.opacity = 1
     end
 end
-
 
 show
