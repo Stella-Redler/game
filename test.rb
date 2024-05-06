@@ -6,18 +6,7 @@ height = 400
 Image.new('Adventures of Pip.png.jfif');
 $lives = 400
 
-restart_text = Text.new(
-    'press "return" to restart',
-    x: 200, y: 200, z: -1,
-    color: 'white',
-)
-
-game_over = Image.new(
-    'game_over.png',
-    x: 0, y: 0, z: -1,
-    width: 640,
-    height: 400,
-)
+$game_over = 'game_over.png'
 
 hooded = Sprite.new(
     'Hooded_emotes.png',
@@ -90,11 +79,6 @@ on :key_held do |event|
     when 'left'
         hooded.x -= 1.5
         hooded.play animation: :run, flip: :horizontal
-    when 'return'
-        game_over.z = -1
-        restart_text.z = -1
-        $lives = 400
-        hooded.x = 10
     end
 end
 
@@ -115,37 +99,42 @@ def update_lives
         $heart1.remove
         $heart2.remove
         $heart3.remove
+    elsif $lives < 0
+        $screen = "game_over"
     end
 end
 
+$screen == "main"
+
 update do
-    update_lives
-    platform_index = [(hooded.x / 640.0 * 33).to_i, arrayY.length - 1].min
-    target_y = arrayY[platform_index]
-    if jumping
-        hooded.y -= jump_speed
-        if hooded.y <= target_y - jump_height
-            jumping = false
+    if $screen == "intro"
+    elsif $screen == "main"
+        update_lives
+        platform_index = [(hooded.x / 640.0 * 33).to_i, arrayY.length - 1].min
+        target_y = arrayY[platform_index]
+        if jumping
+            hooded.y -= jump_speed
+            if hooded.y <= target_y - jump_height
+                jumping = false
+            end
+        else
+            if hooded.y < target_y
+                hooded.y += 1
+            elsif hooded.y > target_y
+                hooded.y = target_y
+            end
         end
-    else
-        if hooded.y < target_y
-            hooded.y += 1
-        elsif hooded.y > target_y
-            hooded.y = target_y
+        if hooded.x >= 240 && hooded.x <= 270 && hooded.y >= 260
+            shrooms.play animation: :attack
+            hooded.color.opacity = 0.5
+            $lives -= 2
+            loop = true
+        else
+            shrooms.stop
+            hooded.color.opacity = 1
         end
-    end
-    if hooded.x >= 240 && hooded.x <= 270 && hooded.y >= 260
-        shrooms.play animation: :attack
-        hooded.color.opacity = 0.5
-        $lives -= 2
-        loop = true
-    else
-        shrooms.stop
-        hooded.color.opacity = 1
-    end
-    if $lives < 0
-        game_over.z = 15
-        restart_text.z = 15
+    elsif $screen == "game_over"
+        p "game over"
     end
 end
 
